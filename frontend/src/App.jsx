@@ -11,6 +11,11 @@ function App() {
   // Top 3 best value regions
   const bestValueRegions = new Set(['Western Victoria', 'Northern Victoria', 'Eastern Victoria']);
 
+  // Calculate stats
+  const highestPriceRegion = priceByRegion[0];
+  const lowestPriceRegion = priceByRegion[priceByRegion.length - 1];
+  const priceTrend = -4.3; // From analysis: 2016 to 2018
+
   // Format price for display
   const formatPrice = (value) => `$${Math.round(value / 1000)}k`;
 
@@ -58,6 +63,51 @@ function App() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+        {/* Summary Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Highest Price Region */}
+          <div className="bg-white rounded-lg shadow p-6">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-sm font-medium text-gray-500">Highest Avg Price</h3>
+              <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              </svg>
+            </div>
+            <p className="text-3xl font-bold text-gray-900">
+              ${Math.round(highestPriceRegion.Avg_Price / 1000)}k
+            </p>
+            <p className="text-sm text-gray-600 mt-1">{highestPriceRegion.Regionname}</p>
+          </div>
+
+          {/* Lowest Price Region */}
+          <div className="bg-white rounded-lg shadow p-6">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-sm font-medium text-gray-500">Lowest Avg Price</h3>
+              <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
+              </svg>
+            </div>
+            <p className="text-3xl font-bold text-gray-900">
+              ${Math.round(lowestPriceRegion.Avg_Price / 1000)}k
+            </p>
+            <p className="text-sm text-gray-600 mt-1">{lowestPriceRegion.Regionname}</p>
+          </div>
+
+          {/* Price Trend */}
+          <div className="bg-white rounded-lg shadow p-6">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-sm font-medium text-gray-500">Price Trend (2016-2018)</h3>
+              <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+            <p className="text-3xl font-bold text-orange-600">
+              {priceTrend}%
+            </p>
+            <p className="text-sm text-gray-600 mt-1">Market cooling trend</p>
+          </div>
+        </div>
+
         {/* Price by Region Chart */}
         <div className="bg-white rounded-lg shadow p-6">
           <h2 className="text-2xl font-semibold text-gray-800 mb-6">
